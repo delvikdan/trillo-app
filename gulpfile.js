@@ -3,11 +3,12 @@ const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
 const rename = require('gulp-rename');
 const browserSync = require('browser-sync');
-const autoprefixer = require('gulp-autoprefixer');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('gulp-clean');
+const autoprefixer = require('autoprefixer');
+const postcss = require('gulp-postcss');
 
 // Pathes to files
 const paths = {
@@ -53,7 +54,7 @@ function styles() {
   return src(paths.scss.src)
     .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
-    .pipe(autoprefixer())
+    .pipe(postcss([autoprefixer()]))
     .pipe(sourcemaps.write())
     .pipe(rename('style.css'))
     .pipe(dest(paths.scss.srcCss))
